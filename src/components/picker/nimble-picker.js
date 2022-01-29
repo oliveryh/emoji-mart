@@ -549,6 +549,35 @@ export default class NimblePicker extends React.PureComponent {
       }
     }
 
+    if (emojis) {
+      const emojiIndex = 0
+      const emoji = emojis[emojiIndex]
+
+      const emojiToPreview = getSanitizedData(
+        emoji,
+        this.state.skin,
+        this.props.set,
+        this.props.data,
+      )
+
+      var { preview } = this
+      if (!preview) {
+        return
+      }
+
+      const emojiData = this.CUSTOM.filter(
+        (customEmoji) => customEmoji.id === emojiToPreview.id,
+      )[0]
+
+      for (let key in emojiData) {
+        if (emojiData.hasOwnProperty(key)) {
+          emoji[key] = emojiData[key]
+        }
+      }
+
+      this.setState({ emoji: emojiToPreview })
+    }
+
     this.forceUpdate()
     if (this.scroll) {
       this.scroll.scrollTop = 0
